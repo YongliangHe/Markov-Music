@@ -13,8 +13,8 @@ MainComponent::MainComponent(): keyboardComponent(keyboardState,                
                                 markovNumIter(50)
 {
     setSize (600, 450);
-    audioFilePath = "/Users/yonglianghe/Desktop/mozart.duos.k487_midip_02.mid";
-//    audioFilePath = "../Resources/mozart.duos.k487_midip_02.mid";
+//    audioFilePath = "/Users/yonglianghe/Desktop/mozart.duos.k487_midip_02.mid";
+    audioFilePath = "../../../../Resources/mozart.duos.k487_midip_02.mid";
 
     addAndMakeVisible(projTitleLabel);
     projTitleLabel.setFont(Font(20.0f, Font::bold));
