@@ -4,7 +4,7 @@
  synthSource.h
  Created: 15 Apr 2018 11:07:23pm
  Author:  Yongliang He
- 
+ Note: This file is from JUCE demo
  ==============================================================================
  */
 

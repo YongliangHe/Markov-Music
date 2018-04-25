@@ -31,11 +31,11 @@ public:
 #ifdef JUCE_DEBUG
         runTest = true;
 #endif
-//        if (runTest) {
-//            UnitTestRunner testRunner;
-//            static Test test;
-//            testRunner.runAllTests();
-//        }
+        if (runTest) {
+            UnitTestRunner testRunner;
+            static Test test;
+            testRunner.runAllTests();
+        }
         mainWindow = new MainWindow (getApplicationName());
     }
 

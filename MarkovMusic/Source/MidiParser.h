@@ -20,8 +20,8 @@ class MidiParser {
 private:
     MidiFile midiFile;
     int numTrack;
-    const MidiMessageSequence **midiMessageSequence;
-//    Array<MidiMessageSequence*> messageSequenceArray;
+//    const MidiMessageSequence **midiMessageSequence;
+    Array<const MidiMessageSequence*> messageSequenceArray;
 public:
     MidiParser();
     virtual ~MidiParser();
@@ -30,6 +30,6 @@ public:
     void printEventsForTrack(int index);
     void printEventsForAll();
     int getNumTrack();
-    const MidiMessageSequence** getMessageSequence();
+    Array< const MidiMessageSequence*> getMessageSequence();
     vector<std::pair<int, double>> getNoteSequenceForTrack(int index);
 };

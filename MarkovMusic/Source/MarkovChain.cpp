@@ -25,7 +25,6 @@ numState(0)
 }
 
 MarkovChain::~MarkovChain(){
-//        srand(static_cast<int>(time(NULL)));
 };
 
 void MarkovChain::init(vector<float> data, int order) {

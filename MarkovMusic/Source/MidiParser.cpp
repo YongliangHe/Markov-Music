@@ -10,8 +10,7 @@
 
 #include "MidiParser.h"
 #include <iostream>
-MidiParser::MidiParser(): numTrack(0),
-                          midiMessageSequence(nullptr)
+MidiParser::MidiParser(): numTrack(0)
 {
 }
 
@@ -25,22 +24,20 @@ void MidiParser::readFile(String path) {
     midiFile.readFrom(stream);
     numTrack = midiFile.getNumTracks();
     midiFile.convertTimestampTicksToSeconds();
-    midiMessageSequence = new const MidiMessageSequence*[numTrack];
+    messageSequenceArray.clear();
     for (int i = 0; i < numTrack; i++) {
-        midiMessageSequence[i] = midiFile.getTrack(i);
+        messageSequenceArray.add(midiFile.getTrack(i));
     }
 }
 
 void MidiParser::reset() {
-//    delete[] midiMessageSequence;
-    midiMessageSequence = nullptr;
 }
 
 void MidiParser::printEventsForTrack(int index) {
-    int numEvents = midiMessageSequence[index]->getNumEvents();
+    int numEvents = messageSequenceArray[index]->getNumEvents();
     for (int i = 0; i < numEvents; i++) {
-        std::cout << midiMessageSequence[index]->getEventPointer(i)->message.getDescription();
-        std::cout << "time stamp: " << midiMessageSequence[index]->getEventPointer(i)->message.getTimeStamp() << " s" << std::endl;
+        std::cout << messageSequenceArray[index]->getEventPointer(i)->message.getDescription();
+        std::cout << "time stamp: " << messageSequenceArray[index]->getEventPointer(i)->message.getTimeStamp() << " s" << std::endl;
     }
 }
 
@@ -54,7 +51,7 @@ vector<pair<int, double>> MidiParser::getNoteSequenceForTrack(int index) {
     vector<pair<int, double>> resSequence; //!< midi pitch and note duration pair
     vector<pair<MidiMessage, double>> noteOnSequence;  //!< midi message and note duration pair
     map<int, double> notesOfChord; //!< midi pitch and note duration pair, used to get the highist note in a chord
-    const MidiMessageSequence* sequence = midiMessageSequence[index];
+    const MidiMessageSequence* sequence = messageSequenceArray[index];
     
     double duration = 0;
     for (int i = 0; i < sequence->getNumEvents(); i++) {
@@ -103,8 +100,8 @@ int MidiParser::getNumTrack() {
     return numTrack;
 }
 
-const MidiMessageSequence** MidiParser::getMessageSequence() {
-    return midiMessageSequence;
+Array<const MidiMessageSequence*> MidiParser::getMessageSequence() {
+    return messageSequenceArray;
 }
 
 
