@@ -30,6 +30,7 @@ public:
     void prepareToPlay (int samplesPerBlockExpected, double sampleRate) override;
     void getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill) override;
     void releaseResources() override;
+    void openButtonClicked();
     void playOrigButtonClicked();
     void playButtonClicked();
     void stopButtonClicked();
@@ -56,6 +57,7 @@ private:
     TextButton playOrigButton;
     TextButton playButton;
     TextButton stopButton;
+    TextButton openButton;
     Label projTitleLabel;
     Slider orderSlider;
     Label orderLabel;

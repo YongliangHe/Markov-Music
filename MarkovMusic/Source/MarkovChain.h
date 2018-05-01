@@ -24,9 +24,9 @@ public:
     void reset();
     vector<float> getSequences(int numIter);
 private:
-#ifdef JUCE_DEBUG
+//#ifdef JUCE_DEBUG
     friend class Test;
-#endif
+//#endif
     int getIndexForState(float state);
     vector<float> getStateList(vector<float> data);
     void initTransitionMatrix(vector<float> data);

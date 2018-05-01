@@ -21,7 +21,13 @@ MidiParser::~MidiParser() {
 void MidiParser::readFile(String path) {
     File targetFile(path);
     FileInputStream stream(targetFile);
-    midiFile.readFrom(stream);
+    if (!stream.openedOk()) {
+        return;
+    }
+    bool isSuccess = midiFile.readFrom(stream);
+    if (!isSuccess) {
+        return;
+    }
     numTrack = midiFile.getNumTracks();
     midiFile.convertTimestampTicksToSeconds();
     messageSequenceArray.clear();

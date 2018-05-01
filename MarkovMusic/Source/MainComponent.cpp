@@ -12,25 +12,31 @@ MainComponent::MainComponent(): keyboardComponent(keyboardState,                
                                 markovOrder(1),
                                 markovNumIter(50)
 {
-    setSize (600, 450);
-    audioFilePath = "../../../../Resources/mozart.duos.k487_midip_02.mid";
+    setSize (600, 500);
 
     addAndMakeVisible(projTitleLabel);
     projTitleLabel.setFont(Font(20.0f, Font::bold));
     projTitleLabel.setText("Markov Chain Music Generator", dontSendNotification);
     projTitleLabel.setJustificationType(Justification::horizontallyCentred);
     
+    addAndMakeVisible(openButton);
+    openButton.setButtonText("Open the sample file");
+    openButton.onClick = [this] {openButtonClicked();};
+    
     addAndMakeVisible(playOrigButton);
     playOrigButton.setButtonText("Play the original midi");
     playOrigButton.onClick = [this] {playOrigButtonClicked();};
+    playOrigButton.setEnabled(false);
     
     addAndMakeVisible(playButton);
     playButton.setButtonText("Play Markov music");
     playButton.onClick = [this] {playButtonClicked();};
+    playButton.setEnabled(false);
     
     addAndMakeVisible(stopButton);
     stopButton.setButtonText("Stop");
     stopButton.onClick = [this] {stopButtonClicked();};
+    stopButton.setEnabled(false);
     
     addAndMakeVisible(orderLabel);
     orderLabel.setText("Markov order:", dontSendNotification);
@@ -84,6 +90,21 @@ void MainComponent::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFil
 
 void MainComponent::releaseResources()
 {
+}
+
+void MainComponent::openButtonClicked() {
+    FileChooser chooser ("Select a midi File to open...", // 1
+                         File::nonexistent,
+                         "*.mid");
+    
+    if(chooser.browseForFileToOpen()){  // 2
+        const File file (chooser.getResult());
+        String path (file.getFullPathName());
+        std::swap(audioFilePath, path);
+        playButton.setEnabled(true);
+        stopButton.setEnabled(true);
+        playOrigButton.setEnabled(true);
+    }
 }
 
 void MainComponent::playOrigButtonClicked() {
@@ -190,8 +211,9 @@ void MainComponent::resized()
     iterSlider.setBounds(getWidth()/4, 160, getWidth() / 3 * 2, 30);
     orderLabel.setBounds(28, 210, getWidth() / 3, 30);
     orderSlider.setBounds(getWidth()/4, 210, getWidth() / 3 * 2, 30);
-    playButton.setBounds(getWidth() / 2 - 100, 260, 200, 35);
-    stopButton.setBounds(getWidth() / 2 - 100, 310, 200, 35);
-    playOrigButton.setBounds(getWidth() / 2 - 100, 360, 200, 35);
+    openButton.setBounds(getWidth() / 2 - 100, 260, 200, 35);
+    playButton.setBounds(getWidth() / 2 - 100, 310, 200, 35);
+    stopButton.setBounds(getWidth() / 2 - 100, 360, 200, 35);
+    playOrigButton.setBounds(getWidth() / 2 - 100, 410, 200, 35);
     
 }
